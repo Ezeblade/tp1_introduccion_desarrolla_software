@@ -1,7 +1,7 @@
 #!/bin/bash
-path_entrada="$HOME/EPNro1/entrada"
-path_salida="$HOME/EPNro1/salida"
-path_procesado="$HOME/EPNro1/procesado"
+path_entrada="EPNro1/entrada"
+path_salida="EPNro1/salida"
+path_procesado="EPNro1/procesado"
 CONTINUAR=0
 while [ "$CONTINUAR" -eq 0 ];do
 	echo -e "-------Menu-------\nElegi una opcion del menu\n1- Creacion de directorios\n2- Iniciar proceso de consolidacion\n3- Listado de alumnos ordenados por padron\n4- Las mejores 10 notas\n5- Consultar padron\n6- Salir\n-d- Borrar entorno"
@@ -20,7 +20,7 @@ while [ "$CONTINUAR" -eq 0 ];do
 		echo -e "\nElige otra opcion del menu porfavor"
 		;;
 		2) #Ejecutar consolidar.sh y copia archivos de entrada y pegarlo en salida. Pasa archivos entrada a pocesado
-		 if [ -d "$HOME/EPNro1" ]; then
+		 if [ -d "EPNro1" ]; then
 		  echo "Se ejecuto el proceso correctamente"
 		  cp consolidar.sh EPNro1
 		  bash EPNro1/consolidar.sh
