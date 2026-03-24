@@ -1,5 +1,6 @@
 #!/bin/bash
 #Declaramos las rutas en variables para algo mas legible y dado que se repite mucho
+parametro_optativo="$1"
 path_entrada="EPNro1/entrada"
 path_salida="EPNro1/salida"
 path_procesado="EPNro1/procesado"
@@ -8,7 +9,7 @@ path_procesado="EPNro1/procesado"
 CONTINUAR=0
 
 while [ "$CONTINUAR" -eq 0 ];do
-	echo -e "-------Menu-------\nElegi una opcion del menu\n1- Creacion de directorios\n2- Iniciar proceso de consolidacion\n3- Listado de alumnos ordenados por padron\n4- Las mejores 10 notas\n5- Consultar padron\n6- Salir\n-d- Borrar entorno"
+	echo -e "-------Menu-------\nElegi una opcion del menu\n1- Creacion de directorios\n2- Iniciar proceso de consolidacion\n3- Listado de alumnos ordenados por padron\n4- Las mejores 10 notas\n5- Consultar padron\n6- Salir\n"
 	read opcion  #Imprimimos las opciones y analizamos cual fue la eleccion del usuario, utilizamos un case para acceder al bloque del caso elegido
 
 	case $opcion in
@@ -63,12 +64,12 @@ while [ "$CONTINUAR" -eq 0 ];do
 		  echo "Ingrese un numero de padron:"
 		  read padron
 
-		  if grep -q "^$padron" "$path_salida/$FILENAME.txt"; then
-		   echo "El usuario con el padron pedido es:"
-		   grep "^$padron" "$path_salida/$FILENAME.txt"
-		  else
-		   echo "No hay ningun usuario con el padron: $padron"
-		  fi
+		 	if grep -q "^$padron" "$path_salida/$FILENAME.txt"; then
+		   		echo "El usuario con el padron pedido es:"
+				grep "^$padron" "$path_salida/$FILENAME.txt"
+		 	else
+		   		echo "No hay ningun usuario con el padron: $padron"
+		 	fi
 		 else
 		 echo "No existe el archivo que se requiere para este proceso"
 	         fi
@@ -76,22 +77,17 @@ while [ "$CONTINUAR" -eq 0 ];do
 		;;
 
 		6) # Salir del bucle (menu)
+		 if [ "$parametro_optativo" = "-d" ]; then
+
+			if [ -d "EPNro1" ]; then 
+                		 echo "Se ha borrado el entorno"
+		                 rm -r EPNro1
+               	 	else
+                 		 echo "No existe un entorno"
+                	fi
+		 fi
 		 echo "Has salido del menu"
 		 CONTINUAR=1
-		;;
-
-		-d) #  Borrar entorno y matar procesos creados. Primero verifica si existe la carpeta, despues se elimina junto a todo su interior
-		if [ -d "EPNro1" ]; then 
-		 echo "Se elimino la carpeta EPNro1"
-		 rm -r EPNro1
-		else
-		 echo "No existe un entorno"
-		fi
-		echo -e "\nElige otra opcion del menu porfavor"
-		;;
-
-		*) # Cualquier opcion no dentro de las opciones
-		 echo -e "\nOpcion no valida. Elige otra opcion del menu porfavor"
 		;;
 
 	esac
